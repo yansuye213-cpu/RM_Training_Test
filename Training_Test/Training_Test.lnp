@@ -34,6 +34,9 @@
 "training_test\cmsis_os.o"
 "training_test\heap_4.o"
 "training_test\port.o"
+"training_test\ble_remote.o"
+"training_test\motor.o"
+"training_test\pid.o"
 --strict --scatter "Training_Test\Training_Test.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
