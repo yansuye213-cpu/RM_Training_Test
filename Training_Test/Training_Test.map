@@ -76,8 +76,8 @@ Section Cross References
     freertos.o(i.vApplicationGetIdleTaskMemory) refers to freertos.o(.bss) for xIdleTaskTCBBuffer
     freertos.o(.constdata) refers to freertos.o(.conststring) for .conststring
     freertos.o(.constdata) refers to freertos.o(i.StartDefaultTask) for StartDefaultTask
-    freertos.o(.constdata) refers to freertos.o(i.Start_Servo_Control) for Start_Servo_Control
-    freertos.o(.constdata) refers to freertos.o(i.Start_Chassis_Control) for Start_Chassis_Control
+    freertos.o(.constdata) refers to servo_control.o(i.Start_Servo_Control) for Start_Servo_Control
+    freertos.o(.constdata) refers to chassis_control.o(i.Start_Chassis_Control) for Start_Chassis_Control
     dma.o(i.MX_DMA_Init) refers to stm32f1xx_hal_cortex.o(i.HAL_NVIC_SetPriority) for HAL_NVIC_SetPriority
     dma.o(i.MX_DMA_Init) refers to stm32f1xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ) for HAL_NVIC_EnableIRQ
     tim.o(i.HAL_TIM_Base_MspDeInit) refers to stm32f1xx_hal_cortex.o(i.HAL_NVIC_DisableIRQ) for HAL_NVIC_DisableIRQ
@@ -1018,6 +1018,11 @@ Section Cross References
     port.o(i.xPortStartScheduler) refers to port.o(i.vPortSetupTimerInterrupt) for vPortSetupTimerInterrupt
     port.o(i.xPortStartScheduler) refers to port.o(.emb_text) for __asm___6_port_c_39a90d8d__prvStartFirstTask
     port.o(i.xPortStartScheduler) refers to port.o(.data) for ucMaxSysCallPriority
+    chassis_control.o(i.Start_Chassis_Control) refers to cmsis_os.o(i.osDelay) for osDelay
+    chassis_control.o(i.Start_Chassis_Control) refers to main.o(.bss) for g_cmd
+    servo_control.o(i.Start_Servo_Control) refers to f2d.o(x$fpl$f2d) for __aeabi_f2d
+    servo_control.o(i.Start_Servo_Control) refers to cmsis_os.o(i.osDelay) for osDelay
+    servo_control.o(i.Start_Servo_Control) refers to main.o(.bss) for g_cmd
     pid.o(i.LimitMax) refers to frleqf.o(x$fpl$frleqf) for __aeabi_cfrcmple
     pid.o(i.PID_Calculate) refers to faddsub_clz.o(x$fpl$fsub) for __aeabi_fsub
     pid.o(i.PID_Calculate) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
@@ -1230,6 +1235,8 @@ Removing Unused input sections from the image.
     Removing freertos.o(.rev16_text), (4 bytes).
     Removing freertos.o(.revsh_text), (4 bytes).
     Removing freertos.o(.rrx_text), (6 bytes).
+    Removing freertos.o(i.Start_Chassis_Control), (12 bytes).
+    Removing freertos.o(i.Start_Servo_Control), (12 bytes).
     Removing dma.o(.rev16_text), (4 bytes).
     Removing dma.o(.revsh_text), (4 bytes).
     Removing dma.o(.rrx_text), (6 bytes).
@@ -1759,6 +1766,12 @@ Removing Unused input sections from the image.
     Removing heap_4.o(i.xPortGetMinimumEverFreeHeapSize), (12 bytes).
     Removing port.o(i.vPortEndScheduler), (48 bytes).
     Removing port.o(i.vPortValidateInterruptPriority), (120 bytes).
+    Removing chassis_control.o(.rev16_text), (4 bytes).
+    Removing chassis_control.o(.revsh_text), (4 bytes).
+    Removing chassis_control.o(.rrx_text), (6 bytes).
+    Removing servo_control.o(.rev16_text), (4 bytes).
+    Removing servo_control.o(.revsh_text), (4 bytes).
+    Removing servo_control.o(.rrx_text), (6 bytes).
     Removing pid.o(i.LimitMax), (42 bytes).
     Removing pid.o(i.PID_Calculate), (264 bytes).
     Removing pid.o(i.PID_Init), (56 bytes).
@@ -1772,4 +1785,4 @@ Removing Unused input sections from the image.
     Removing motor.o(i.Motor_Pid_Init), (42 bytes).
     Removing motor.o(i.Motor_Speed_Get), (208 bytes).
 
-550 unused section(s) (total 48234 bytes) removed from the image.
+558 unused section(s) (total 48286 bytes) removed from the image.
