@@ -10,7 +10,6 @@
       <TargetName>Training_Test</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -340,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/STM32F1xx_HAL_Driver/Inc;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Users_Drive\ble_remote;..\Users_Drive\PID;..\Users_Drive\Motor</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/STM32F1xx_HAL_Driver/Inc;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\Users_Drive\Motor;..\Users_Drive\PID;..\Task</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -582,22 +581,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Users_Drivers</GroupName>
+          <GroupName>Task</GroupName>
           <Files>
             <File>
-              <FileName>ble_remote.c</FileName>
+              <FileName>Chassis_control.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Users_Drive\ble_remote\ble_remote.c</FilePath>
+              <FilePath>..\Task\Chassis_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>Servo_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Task\Servo_control.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Users_Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Users_Drive\PID\pid.c</FilePath>
             </File>
             <File>
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Users_Drive\Motor\motor.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Users_Drive\PID\pid.c</FilePath>
             </File>
           </Files>
         </Group>

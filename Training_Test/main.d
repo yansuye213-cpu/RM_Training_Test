@@ -48,5 +48,6 @@ training_test\main.o: ../Core/Inc/usart.h
 training_test\main.o: ../Core/Inc/gpio.h
 training_test\main.o: ..\Users_Drive\Motor\motor.h
 training_test\main.o: ..\Users_Drive\PID\pid.h
-training_test\main.o: ..\Users_Drive\ble_remote\ble_remote.h
+training_test\main.o: ../Core/Inc/ble_remote.h
 training_test\main.o: D:\RM\Keil5\ARM\ARMCC\Bin\..\include\string.h
+training_test\main.o: D:\RM\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h

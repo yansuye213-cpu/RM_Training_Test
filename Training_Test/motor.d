@@ -32,5 +32,5 @@ training_test\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.
 training_test\motor.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 training_test\motor.o: ..\Users_Drive\PID\pid.h
 training_test\motor.o: ../Core/Inc/tim.h
-training_test\motor.o: ..\Users_Drive\ble_remote\ble_remote.h
+training_test\motor.o: ../Core/Inc/ble_remote.h
 training_test\motor.o: D:\RM\Keil5\ARM\ARMCC\Bin\..\include\math.h
