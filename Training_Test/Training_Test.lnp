@@ -9,6 +9,7 @@
 "training_test\stm32f1xx_it.o"
 "training_test\stm32f1xx_hal_msp.o"
 "training_test\stm32f1xx_hal_timebase_tim.o"
+"training_test\ble_remote.o"
 "training_test\stm32f1xx_hal_gpio_ex.o"
 "training_test\stm32f1xx_hal.o"
 "training_test\stm32f1xx_hal_rcc.o"
