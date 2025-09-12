@@ -42,8 +42,6 @@ training_test\chassis_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/incl
 training_test\chassis_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 training_test\chassis_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 training_test\chassis_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-training_test\chassis_control.o: ../Core/Inc/dma.h
 training_test\chassis_control.o: ../Core/Inc/tim.h
 training_test\chassis_control.o: ../Core/Inc/usart.h
-training_test\chassis_control.o: ../Core/Inc/gpio.h
 training_test\chassis_control.o: ../Core/Inc/control_cmd.h

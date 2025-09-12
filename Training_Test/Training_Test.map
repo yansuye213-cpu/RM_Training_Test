@@ -1018,11 +1018,19 @@ Section Cross References
     port.o(i.xPortStartScheduler) refers to port.o(i.vPortSetupTimerInterrupt) for vPortSetupTimerInterrupt
     port.o(i.xPortStartScheduler) refers to port.o(.emb_text) for __asm___6_port_c_39a90d8d__prvStartFirstTask
     port.o(i.xPortStartScheduler) refers to port.o(.data) for ucMaxSysCallPriority
+    chassis_control.o(i.Start_Chassis_Control) refers to chassis_control.o(i.mecanum_calc) for mecanum_calc
     chassis_control.o(i.Start_Chassis_Control) refers to cmsis_os.o(i.osDelay) for osDelay
     chassis_control.o(i.Start_Chassis_Control) refers to main.o(.bss) for g_cmd
-    servo_control.o(i.Start_Servo_Control) refers to f2d.o(x$fpl$f2d) for __aeabi_f2d
+    servo_control.o(i.Start_Servo_Control) refers to servo_control.o(i.servo_set_angle) for servo_set_angle
     servo_control.o(i.Start_Servo_Control) refers to cmsis_os.o(i.osDelay) for osDelay
     servo_control.o(i.Start_Servo_Control) refers to main.o(.bss) for g_cmd
+    servo_control.o(i.servo_set_angle) refers to fleqf.o(x$fpl$fleqf) for __aeabi_cfcmple
+    servo_control.o(i.servo_set_angle) refers to frleqf.o(x$fpl$frleqf) for __aeabi_cfrcmple
+    servo_control.o(i.servo_set_angle) refers to fdiv.o(x$fpl$fdiv) for __aeabi_fdiv
+    servo_control.o(i.servo_set_angle) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
+    servo_control.o(i.servo_set_angle) refers to faddsub_clz.o(x$fpl$fadd) for __aeabi_fadd
+    servo_control.o(i.servo_set_angle) refers to ffixu.o(x$fpl$ffixu) for __aeabi_f2uiz
+    servo_control.o(i.servo_set_angle) refers to tim.o(.bss) for htim1
     pid.o(i.LimitMax) refers to frleqf.o(x$fpl$frleqf) for __aeabi_cfrcmple
     pid.o(i.PID_Calculate) refers to faddsub_clz.o(x$fpl$fsub) for __aeabi_fsub
     pid.o(i.PID_Calculate) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
@@ -1105,6 +1113,10 @@ Section Cross References
     ffix.o(x$fpl$ffix) refers to fnaninf.o(x$fpl$fnaninf) for __fpl_fnaninf
     ffix.o(x$fpl$ffixr) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     ffix.o(x$fpl$ffixr) refers to fnaninf.o(x$fpl$fnaninf) for __fpl_fnaninf
+    ffixu.o(x$fpl$ffixu) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
+    ffixu.o(x$fpl$ffixu) refers to fnaninf.o(x$fpl$fnaninf) for __fpl_fnaninf
+    ffixu.o(x$fpl$ffixur) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
+    ffixu.o(x$fpl$ffixur) refers to fnaninf.o(x$fpl$fnaninf) for __fpl_fnaninf
     fflt_clz.o(x$fpl$ffltu) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     fflt_clz.o(x$fpl$fflt) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
     fflt_clz.o(x$fpl$ffltn) refers (Special) to usenofp.o(x$fpl$usenofp) for __I$use$fp
