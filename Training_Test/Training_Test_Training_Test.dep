@@ -1,7 +1,7 @@
 Dependencies for Project 'Training_Test', Target 'Training_Test': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
 F (startup_stm32f103xe.s)(0x68C421F7)(--cpu Cortex-M3 -g --apcs=interwork -I ../Core/Inc-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include--pd "__UVISION_VERSION SETA 538" --pd "_RTE_ SETA 1" --pd "STM32F10X_HD SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f103xe.lst --xref -o training_test\startup_stm32f103xe.o --depend training_test\startup_stm32f103xe.d)
-F (../Core/Src/main.c)(0x68C429F5)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Users_Drive\Motor -I ..\Users_Drive\PID -I ..\Task-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE-o training_test\main.o --omf_browse training_test\main.crf --depend training_test\main.d)
+F (../Core/Src/main.c)(0x68C528CF)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Users_Drive\Motor -I ..\Users_Drive\PID -I ..\Task-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE-o training_test\main.o --omf_browse training_test\main.crf --depend training_test\main.d)
 I (../Core/Inc/main.h)(0x68C3C7CB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x687F70DD)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x68BE9EC5)
@@ -50,10 +50,10 @@ I (../Core/Inc/usart.h)(0x68BE9EC5)
 I (../Core/Inc/gpio.h)(0x68BE9EC4)
 I (..\Users_Drive\Motor\motor.h)(0x68C2D545)
 I (..\Users_Drive\PID\pid.h)(0x68C2D53D)
-I (../Core/Inc/ble_remote.h)(0x68C2D155)
+I (../Core/Inc/ble_remote.h)(0x68C526C7)
 I (D:\RM\Keil5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
 I (D:\RM\Keil5\ARM\ARMCC\include\stdlib.h)(0x666EA71C)
-I (../Core/Inc/control_cmd.h)(0x68C427BD)
+I (../Core/Inc/control_cmd.h)(0x68C52662)
 F (../Core/Src/gpio.c)(0x68C3C7C9)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Users_Drive\Motor -I ..\Users_Drive\PID -I ..\Task-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE-o training_test\gpio.o --omf_browse training_test\gpio.crf --depend training_test\gpio.d)
 I (../Core/Inc/gpio.h)(0x68BE9EC4)
 I (../Core/Inc/main.h)(0x68C3C7CB)
@@ -305,7 +305,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x687F70DD)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x687F70DD)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x687F70DD)
 F (..\Core\Src\ble_remote.c)(0x68C2D11C)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Users_Drive\Motor -I ..\Users_Drive\PID -I ..\Task-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE-o training_test\ble_remote.o --omf_browse training_test\ble_remote.crf --depend training_test\ble_remote.d)
-I (../Core/Inc/ble_remote.h)(0x68C2D155)
+I (../Core/Inc/ble_remote.h)(0x68C526C7)
 I (../Core/Inc/main.h)(0x68C3C7CB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x687F70DD)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x68BE9EC5)
@@ -944,8 +944,8 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x687F70DD)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x687F70DD)
 I (../Core/Inc/tim.h)(0x68BE9EC5)
 I (../Core/Inc/usart.h)(0x68BE9EC5)
-I (../Core/Inc/control_cmd.h)(0x68C427BD)
-F (..\Task\Servo_control.c)(0x68C42D92)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Users_Drive\Motor -I ..\Users_Drive\PID -I ..\Task-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE-o training_test\servo_control.o --omf_browse training_test\servo_control.crf --depend training_test\servo_control.d)
+I (../Core/Inc/control_cmd.h)(0x68C52662)
+F (..\Task\Servo_control.c)(0x68C527F4)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Users_Drive\Motor -I ..\Users_Drive\PID -I ..\Task-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE-o training_test\servo_control.o --omf_browse training_test\servo_control.crf --depend training_test\servo_control.d)
 I (../Core/Inc/main.h)(0x68C3C7CB)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x687F70DD)
 I (../Core/Inc/stm32f1xx_hal_conf.h)(0x68BE9EC5)
@@ -990,7 +990,8 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x687F70DD)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x687F70DD)
 I (../Core/Inc/tim.h)(0x68BE9EC5)
 I (../Core/Inc/usart.h)(0x68BE9EC5)
-I (../Core/Inc/control_cmd.h)(0x68C427BD)
+I (../Core/Inc/control_cmd.h)(0x68C52662)
+I (../Core/Inc/ble_remote.h)(0x68C526C7)
 F (..\Users_Drive\PID\pid.c)(0x66C70268)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Users_Drive\Motor -I ..\Users_Drive\PID -I ..\Task-I.\RTE\_Training_Test-ID:\RM\Keil5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\RM\Keil5\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE-o training_test\pid.o --omf_browse training_test\pid.crf --depend training_test\pid.d)
 I (..\Users_Drive\PID\pid.h)(0x68C2D53D)
 I (D:\RM\Keil5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
@@ -1027,5 +1028,5 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x687F70DD)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x687F70DD)
 I (..\Users_Drive\PID\pid.h)(0x68C2D53D)
 I (../Core/Inc/tim.h)(0x68BE9EC5)
-I (../Core/Inc/ble_remote.h)(0x68C2D155)
+I (../Core/Inc/ble_remote.h)(0x68C526C7)
 I (D:\RM\Keil5\ARM\ARMCC\include\math.h)(0x5E8E3CC2)

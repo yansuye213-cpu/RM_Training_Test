@@ -45,3 +45,4 @@ training_test\servo_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/includ
 training_test\servo_control.o: ../Core/Inc/tim.h
 training_test\servo_control.o: ../Core/Inc/usart.h
 training_test\servo_control.o: ../Core/Inc/control_cmd.h
+training_test\servo_control.o: ../Core/Inc/ble_remote.h

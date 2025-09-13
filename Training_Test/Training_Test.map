@@ -31,16 +31,18 @@ Section Cross References
     startup_stm32f103xe.o(.text) refers to startup_stm32f103xe.o(HEAP) for Heap_Mem
     startup_stm32f103xe.o(.text) refers to startup_stm32f103xe.o(STACK) for Stack_Mem
     main.o(i.HAL_TIM_PeriodElapsedCallback) refers to stm32f1xx_hal.o(i.HAL_IncTick) for HAL_IncTick
-    main.o(i.HAL_UARTEx_RxEventCallback) refers to ble_remote.o(i.uart_to_remote) for uart_to_remote
-    main.o(i.HAL_UARTEx_RxEventCallback) refers to ffix.o(x$fpl$ffix) for __aeabi_f2iz
-    main.o(i.HAL_UARTEx_RxEventCallback) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
-    main.o(i.HAL_UARTEx_RxEventCallback) refers to faddsub_clz.o(x$fpl$fadd) for __aeabi_fadd
-    main.o(i.HAL_UARTEx_RxEventCallback) refers to fleqf.o(x$fpl$fleqf) for __aeabi_cfcmple
-    main.o(i.HAL_UARTEx_RxEventCallback) refers to frleqf.o(x$fpl$frleqf) for __aeabi_cfrcmple
+    main.o(i.HAL_UARTEx_RxEventCallback) refers to main.o(i.ProcessBleData) for ProcessBleData
     main.o(i.HAL_UARTEx_RxEventCallback) refers to stm32f1xx_hal_uart.o(i.HAL_UARTEx_ReceiveToIdle_DMA) for HAL_UARTEx_ReceiveToIdle_DMA
     main.o(i.HAL_UARTEx_RxEventCallback) refers to usart.o(.bss) for huart3
     main.o(i.HAL_UARTEx_RxEventCallback) refers to main.o(.bss) for rx_buf
-    main.o(i.HAL_UARTEx_RxEventCallback) refers to main.o(.data) for selected_servo
+    main.o(i.ProcessBleData) refers to ble_remote.o(i.uart_to_remote) for uart_to_remote
+    main.o(i.ProcessBleData) refers to ffix.o(x$fpl$ffix) for __aeabi_f2iz
+    main.o(i.ProcessBleData) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
+    main.o(i.ProcessBleData) refers to faddsub_clz.o(x$fpl$fadd) for __aeabi_fadd
+    main.o(i.ProcessBleData) refers to fleqf.o(x$fpl$fleqf) for __aeabi_cfcmple
+    main.o(i.ProcessBleData) refers to frleqf.o(x$fpl$frleqf) for __aeabi_cfrcmple
+    main.o(i.ProcessBleData) refers to main.o(.bss) for g_remote
+    main.o(i.ProcessBleData) refers to main.o(.data) for selected_servo
     main.o(i.SystemClock_Config) refers to rt_memclr_w.o(.text) for __aeabi_memclr4
     main.o(i.SystemClock_Config) refers to stm32f1xx_hal_rcc.o(i.HAL_RCC_OscConfig) for HAL_RCC_OscConfig
     main.o(i.SystemClock_Config) refers to main.o(i.Error_Handler) for Error_Handler
@@ -1036,6 +1038,7 @@ Section Cross References
     chassis_control.o(i.Start_Chassis_Control) refers to cmsis_os.o(i.osDelay) for osDelay
     chassis_control.o(i.Start_Chassis_Control) refers to main.o(.bss) for g_cmd
     servo_control.o(i.Start_Servo_Control) refers to servo_control.o(i.servo_set_angle) for servo_set_angle
+    servo_control.o(i.Start_Servo_Control) refers to stm32f1xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
     servo_control.o(i.Start_Servo_Control) refers to cmsis_os.o(i.osDelay) for osDelay
     servo_control.o(i.Start_Servo_Control) refers to main.o(.bss) for g_cmd
     servo_control.o(i.servo_set_angle) refers to fleqf.o(x$fpl$fleqf) for __aeabi_cfcmple
