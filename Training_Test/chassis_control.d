@@ -45,3 +45,7 @@ training_test\chassis_control.o: ../Middlewares/Third_Party/FreeRTOS/Source/incl
 training_test\chassis_control.o: ../Core/Inc/tim.h
 training_test\chassis_control.o: ../Core/Inc/usart.h
 training_test\chassis_control.o: ../Core/Inc/control_cmd.h
+training_test\chassis_control.o: ..\Users_Drive\Motor\motor.h
+training_test\chassis_control.o: ../Core/Inc/gpio.h
+training_test\chassis_control.o: ..\Users_Drive\PID\pid.h
+training_test\chassis_control.o: ../Core/Inc/ble_remote.h
