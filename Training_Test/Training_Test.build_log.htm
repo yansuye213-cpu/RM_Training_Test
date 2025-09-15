@@ -27,31 +27,31 @@ Project File Date:  09/15/2025
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\RM\Keil5\ARM\ARMCC\Bin'
 Build target 'Training_Test'
+compiling ble_remote.c...
+..\Core\Src\ble_remote.c(73): warning:  #1-D: last line of file ends without a newline
+  }
+..\Core\Src\ble_remote.c: 1 warning, 0 errors
 compiling motor.c...
-../Core/Inc/ble_remote.h(47): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Users_Drive\Motor\motor.h(18): error:  #20: identifier "Motor" is undefined
-  extern Motor motors[4];
 ..\Users_Drive\Motor\motor.c(45): warning:  #177-D: variable "motors"  was declared but never referenced
     Motor motors[4];
 ..\Users_Drive\Motor\motor.c(54): warning:  #188-D: enumerated type mixed with another type
     PID_Init(&motor->pid, mode, maxout, max_iout, kp, ki, kd);
-..\Users_Drive\Motor\motor.c: 3 warnings, 1 error
+..\Users_Drive\Motor\motor.c: 2 warnings, 0 errors
+compiling Servo_control.c...
+..\Task\Servo_control.c(60): warning:  #1-D: last line of file ends without a newline
+  }
+..\Task\Servo_control.c: 1 warning, 0 errors
 compiling Chassis_control.c...
-../Core/Inc/ble_remote.h(47): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Users_Drive\Motor\motor.h(18): error:  #20: identifier "Motor" is undefined
-  extern Motor motors[4];
 ..\Task\Chassis_control.c(55): warning:  #1-D: last line of file ends without a newline
   }
-..\Task\Chassis_control.c: 2 warnings, 1 error
+..\Task\Chassis_control.c: 1 warning, 0 errors
 compiling main.c...
-../Core/Inc/ble_remote.h(47): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Users_Drive\Motor\motor.h(18): error:  #20: identifier "Motor" is undefined
-  extern Motor motors[4];
-../Core/Src/main.c: 1 warning, 1 error
-"Training_Test\Training_Test.axf" - 3 Error(s), 6 Warning(s).
+linking...
+Training_Test\Training_Test.axf: Error: L6218E: Undefined symbol motors (referred from main.o).
+Not enough information to list image symbols.
+Not enough information to list load addresses in the image map.
+Finished: 2 information, 0 warning and 1 error messages.
+"Training_Test\Training_Test.axf" - 1 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 

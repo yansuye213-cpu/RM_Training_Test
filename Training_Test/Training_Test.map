@@ -62,6 +62,7 @@ Section Cross References
     main.o(i.main) refers to stm32f1xx_hal_tim.o(i.HAL_TIM_PWM_Start) for HAL_TIM_PWM_Start
     main.o(i.main) refers to stm32f1xx_hal_tim.o(i.HAL_TIM_Encoder_Start) for HAL_TIM_Encoder_Start
     main.o(i.main) refers to stm32f1xx_hal_uart.o(i.HAL_UARTEx_ReceiveToIdle_DMA) for HAL_UARTEx_ReceiveToIdle_DMA
+    main.o(i.main) refers to motor.o(i.Motor_Init) for Motor_Init
     main.o(i.main) refers to freertos.o(i.MX_FREERTOS_Init) for MX_FREERTOS_Init
     main.o(i.main) refers to cmsis_os.o(i.osKernelStart) for osKernelStart
     main.o(i.main) refers to tim.o(.bss) for htim1
@@ -1035,6 +1036,9 @@ Section Cross References
     port.o(i.xPortStartScheduler) refers to port.o(.emb_text) for __asm___6_port_c_39a90d8d__prvStartFirstTask
     port.o(i.xPortStartScheduler) refers to port.o(.data) for ucMaxSysCallPriority
     chassis_control.o(i.Start_Chassis_Control) refers to chassis_control.o(i.mecanum_calc) for mecanum_calc
+    chassis_control.o(i.Start_Chassis_Control) refers to fflt_clz.o(x$fpl$fflt) for __aeabi_i2f
+    chassis_control.o(i.Start_Chassis_Control) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
+    chassis_control.o(i.Start_Chassis_Control) refers to ffix.o(x$fpl$ffix) for __aeabi_f2iz
     chassis_control.o(i.Start_Chassis_Control) refers to cmsis_os.o(i.osDelay) for osDelay
     chassis_control.o(i.Start_Chassis_Control) refers to main.o(.bss) for g_cmd
     servo_control.o(i.Start_Servo_Control) refers to servo_control.o(i.servo_set_angle) for servo_set_angle
@@ -1905,17 +1909,8 @@ Removing Unused input sections from the image.
     Removing servo_control.o(.rev16_text), (4 bytes).
     Removing servo_control.o(.revsh_text), (4 bytes).
     Removing servo_control.o(.rrx_text), (6 bytes).
-    Removing pid.o(i.LimitMax), (42 bytes).
-    Removing pid.o(i.PID_Calculate), (264 bytes).
-    Removing pid.o(i.PID_Init), (56 bytes).
     Removing motor.o(.rev16_text), (4 bytes).
     Removing motor.o(.revsh_text), (4 bytes).
     Removing motor.o(.rrx_text), (6 bytes).
-    Removing motor.o(i.Motor_Calc), (20 bytes).
-    Removing motor.o(i.Motor_Driver), (194 bytes).
-    Removing motor.o(i.Motor_Encoder_Update), (64 bytes).
-    Removing motor.o(i.Motor_Init), (112 bytes).
-    Removing motor.o(i.Motor_Pid_Init), (42 bytes).
-    Removing motor.o(i.Motor_Speed_Get), (208 bytes).
 
-562 unused section(s) (total 48308 bytes) removed from the image.
+553 unused section(s) (total 47306 bytes) removed from the image.
