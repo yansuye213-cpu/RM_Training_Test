@@ -1,29 +1,11 @@
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\RM\Keil5\ARM\ARMCC\Bin'
 Build target 'Training_Test'
-compiling ble_remote.c...
-..\Core\Src\ble_remote.c(73): warning:  #1-D: last line of file ends without a newline
-  }
-..\Core\Src\ble_remote.c: 1 warning, 0 errors
 compiling motor.c...
-..\Users_Drive\Motor\motor.c(45): warning:  #177-D: variable "motors"  was declared but never referenced
-    Motor motors[4];
 ..\Users_Drive\Motor\motor.c(54): warning:  #188-D: enumerated type mixed with another type
     PID_Init(&motor->pid, mode, maxout, max_iout, kp, ki, kd);
-..\Users_Drive\Motor\motor.c: 2 warnings, 0 errors
-compiling Servo_control.c...
-..\Task\Servo_control.c(60): warning:  #1-D: last line of file ends without a newline
-  }
-..\Task\Servo_control.c: 1 warning, 0 errors
-compiling Chassis_control.c...
-..\Task\Chassis_control.c(55): warning:  #1-D: last line of file ends without a newline
-  }
-..\Task\Chassis_control.c: 1 warning, 0 errors
-compiling main.c...
+..\Users_Drive\Motor\motor.c: 1 warning, 0 errors
 linking...
-Training_Test\Training_Test.axf: Error: L6218E: Undefined symbol motors (referred from main.o).
-Not enough information to list image symbols.
-Not enough information to list load addresses in the image map.
-Finished: 2 information, 0 warning and 1 error messages.
-"Training_Test\Training_Test.axf" - 1 Error(s), 5 Warning(s).
-Target not created.
+Program Size: Code=26736 RO-data=796 RW-data=156 ZI-data=7076  
+FromELF: creating hex file...
+"Training_Test\Training_Test.axf" - 0 Error(s), 1 Warning(s).
 Build Time Elapsed:  00:00:02
