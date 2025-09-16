@@ -1,13 +1,26 @@
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\RM\Keil5\ARM\ARMCC\Bin'
 Build target 'Training_Test'
+compiling ble_remote.c...
+..\Core\Src\ble_remote.c(12): warning:  #167-D: argument of type "volatile rocker_t *" is incompatible with parameter of type "rocker_t *"
+      if (uart_to_rocker(&buff[1], &g_remote.rocker[0]) == REMOTE_ERROR ||
+..\Core\Src\ble_remote.c(13): warning:  #167-D: argument of type "volatile rocker_t *" is incompatible with parameter of type "rocker_t *"
+          uart_to_rocker(&buff[5], &g_remote.rocker[1]) == REMOTE_ERROR)
+..\Core\Src\ble_remote.c: 2 warnings, 0 errors
 compiling motor.c...
 ..\Users_Drive\Motor\motor.c(54): warning:  #188-D: enumerated type mixed with another type
     PID_Init(&motor->pid, mode, maxout, max_iout, kp, ki, kd);
 ..\Users_Drive\Motor\motor.c: 1 warning, 0 errors
 compiling Chassis_control.c...
+compiling Servo_control.c...
+..\Task\Servo_control.c(60): warning:  #1-D: last line of file ends without a newline
+  }
+..\Task\Servo_control.c: 1 warning, 0 errors
 compiling main.c...
+../Core/Src/main.c(49): warning:  #177-D: variable "selected_servo"  was declared but never referenced
+  static int selected_servo = -1;
+../Core/Src/main.c: 1 warning, 0 errors
 linking...
-Program Size: Code=26672 RO-data=796 RW-data=156 ZI-data=7076  
+Program Size: Code=25776 RO-data=540 RW-data=156 ZI-data=7044  
 FromELF: creating hex file...
-"Training_Test\Training_Test.axf" - 0 Error(s), 1 Warning(s).
+"Training_Test\Training_Test.axf" - 0 Error(s), 5 Warning(s).
 Build Time Elapsed:  00:00:02
