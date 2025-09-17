@@ -158,7 +158,7 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_cmd</ItemText>
+          <ItemText>g_cmd,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
@@ -178,7 +178,7 @@
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>selected_servo</ItemText>
+          <ItemText>selected_servo,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
