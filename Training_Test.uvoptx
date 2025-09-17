@@ -163,27 +163,17 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_remote</ItemText>
+          <ItemText>motors[0].speed</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rx_buf</ItemText>
+          <ItemText>motors[0]</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>servo_angle</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>selected_servo,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>motors[0].speed</ItemText>
+          <ItemText>g_remote,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -744,7 +734,7 @@
 
   <Group>
     <GroupName>Users_Driver</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
