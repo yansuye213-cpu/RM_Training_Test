@@ -1,55 +1,35 @@
-# Prerequisites
-*.d
+# ===== 编译生成文件 =====
+*.o          # 目标文件
+*.d          # 依赖文件
+*.axf        # 可执行文件
+*.bin        # 二进制文件
+*.hex        # 十六进制文件
+*.map        # 映射文件
+*.dbg*       # 调试相关文件
+*.bak        # 备份文件
+*.lnp        # 链接相关文件
+*.lst        # 列表文件
+*.crf        # 特定工具生成文件
+*.htm        # 编译输出的 HTML 文件
+*.dep        # 编译依赖文件
+*.rar        # 压缩文件
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# ===== Keil / IDE 临时文件 =====
+.vscode/
+*.uvguix
+*.uvguix.*
+.mxproject
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# ===== 生成目录 =====
+RTE/
+Templates/
+Examples/
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-# debug information files
-*.dwo
+# ===== 保留源文件 =====
+!*.uvprojx   # Keil 工程文件
+!*.h         # C/C++ 头文件
+!*.c         # C 源文件
+!*.ioc       # STM32CubeMX 配置文件
+!*.axf       # 可选择保留/忽略
+!*.bin       # 可选择保留/忽略
+!*.hex       # 可选择保留/忽略
