@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "gpio.h": "c",
-        "pid.h": "c",
-        "control_cmd.h": "c",
-        "motor.h": "c"
-    }
-}

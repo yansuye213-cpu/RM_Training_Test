@@ -135,7 +135,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, rx_buf, RX_BUF_LEN);
   }
 }
-/* USER CODE END 0 */
+/* USER CODE END 0 */  
 
 /**
   * @brief  The application entry point.
@@ -207,7 +207,7 @@ int main(void)
                       POSITION,
                       3600 - 1,           // max_out
                       1800 - 1,           // max_iout
-                      5.0f, 0.0f, 0.0f); // 25.0f, 5.0f, 0.0f
+                      5.0f, 2.0f, 0.0f); // 5.0f, 2.0f, 0.0f
   }
   /* USER CODE END 2 */
 
