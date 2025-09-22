@@ -41,9 +41,9 @@
 
 /* 全局控制数据，两个任务都直接读取 */
 volatile control_cmd_t g_cmd;
-volatile uint8_t vacuum_on = 0; // 0=关闭，1=开启
+volatile uint8_t vacuum_on = 0; // 0=关闭；1=开启
 
-/* 蓝牙解包需要的变量 */
+/* 蓝牙解包的变量 */
 static uint8_t rx_buf[RX_BUF_LEN];
 static float servo_angle[4] = {90, 90, 90, 90};
 static int selected_servo = -1;
@@ -81,7 +81,7 @@ static void ProcessBleData(uint8_t *buf, uint16_t size)
       if (uart_to_remote(&buf[i]) == REMOTE_OK)
       {
         control_cmd_t cmd;
-        cmd.mode = g_remote.Switch[0]; // 使用统一的 volatile g_remote
+        cmd.mode = g_remote.Switch[0]; // 使用统一 volatile g_remote
 
         int selected_servo = -1;
         for (int j = 0; j < 4; j++)
@@ -126,7 +126,7 @@ static void ProcessBleData(uint8_t *buf, uint16_t size)
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/* DMA空闲中断回调：接收蓝牙 */
+/* DMA空闲中断回调：接收蓝牙*/
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
   if (huart == &huart3)
@@ -135,7 +135,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, rx_buf, RX_BUF_LEN);
   }
 }
-/* USER CODE END 0 */  
+/* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.

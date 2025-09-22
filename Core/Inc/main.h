@@ -67,6 +67,8 @@ void Error_Handler(void);
 #define BIN2_GPIO_Port GPIOC
 #define AIR_PUMP_Pin GPIO_PIN_0
 #define AIR_PUMP_GPIO_Port GPIOB
+#define SOLENOID_VALVE_Pin GPIO_PIN_1
+#define SOLENOID_VALVE_GPIO_Port GPIOB
 #define BIN4_Pin GPIO_PIN_12
 #define BIN4_GPIO_Port GPIOB
 #define BIN3_Pin GPIO_PIN_13
