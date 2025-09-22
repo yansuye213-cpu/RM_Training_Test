@@ -76,34 +76,41 @@ static void stop_release(void)
 
 void Start_Servo_Control(void const *argument)
 {
-    // 初始状态：泵和阀都关闭
+    // 初始状态：泵和阀关闭
     vacuum_pump_control(0);
     solenoid_valve_control(0);
 
     for (;;)
     {
-        // 舵机角度输出
-        for (int s = 0; s < 4; s++)
-            servo_set_angle(s, g_cmd.servo_angle[s]);
+        /* 1. 舵机角度控制仅在舵机模式下更新*/
+        if (g_cmd.mode == 1)
+        {
+            for (int s = 0; s < 4; s++)
+            {
+                servo_set_angle(s, g_cmd.servo_angle[s]);
+            }
+        }
 
-        // Switch2 边沿检测
+        /* 2. 吸盘控制与模式无关，始终执行，Switch2 边沿检测*/
         uint8_t current_switch_state = g_remote.Switch[1];
 
         if (current_switch_state != last_switch_state)
         {
             if (current_switch_state) // Switch2 打开
-                start_vacuum();
+            {
+                start_vacuum(); // 开启吸气
+            }
             else // Switch2 关闭
-                start_release();
-
+            {
+                start_release(); // 开始放气
+            }
             last_switch_state = current_switch_state;
         }
 
-        // 放气超过 500 ms 后自动关闭电磁阀
         if (is_releasing &&
             (osKernelSysTick() - release_start_time > 500))
         {
-            stop_release();
+            stop_release(); // 放气完成后自动关阀
         }
 
         osDelay(20);
