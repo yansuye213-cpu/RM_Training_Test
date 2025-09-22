@@ -8,12 +8,13 @@
 #include "pid.h"
 
 extern Motor motors[4]; //  引用全局电机对象
-#define JOY_MAX 300 // 摇杆保险值
-#define REAL_MAX_RPM 331
-#define RPM_SCALE 1.10333 //  根据你的摇杆值与rpm对应关系调节
+
+// === 统一配置 ===
+#define JOY_RANGE 300.0f     // 取摇杆四方向测得的最小绝对值
+#define MOTOR_MAX_RPM 331.0f // 电机安全最大转速（rpm）
 
 /* 计算四个麦轮速度: LF, RF, LB, RB */
-void mecanum_calc(int16_t vx, int16_t vy, int16_t vw, int32_t wheel[4])
+static void mecanum_calc(float vx, float vy, float vw, float wheel[4])
 {
     wheel[0] = vx - vy - vw; // 左前
     wheel[1] = vx + vy + vw; // 右前
@@ -23,21 +24,46 @@ void mecanum_calc(int16_t vx, int16_t vy, int16_t vw, int32_t wheel[4])
 
 void Start_Chassis_Control(void const *argument)
 {
-    int32_t wheel[4];
+    float wheel[4];
     for (;;)
     {
         if (g_cmd.mode == 0) // 底盘模式
         {
-            mecanum_calc(g_cmd.vx, g_cmd.vy, g_cmd.vw, wheel);
+            /* ---------- 1. 摇杆归一化到 [-1,1] ---------- */
+            float vx = (float)g_cmd.vx / JOY_RANGE;
+            float vy = (float)g_cmd.vy / JOY_RANGE;
+            float vw = (float)g_cmd.vw / JOY_RANGE;
+            if (vx > 1.0f)
+                vx = 1.0f;
+            if (vx < -1.0f)
+                vx = -1.0f;
+            if (vy > 1.0f)
+                vy = 1.0f;
+            if (vy < -1.0f)
+                vy = -1.0f;
+            if (vw > 1.0f)
+                vw = 1.0f;
+            if (vw < -1.0f)
+                vw = -1.0f;
 
+            /* ---------- 2. 麦轮速度解算 ---------- */
+            mecanum_calc(vx, vy, vw, wheel);
+
+            /* ---------- 3. 归一化结果转成 rpm 并限幅 ---------- */
             for (int i = 0; i < 4; i++)
             {
+                float target_rpm = wheel[i] * MOTOR_MAX_RPM;
+                if (target_rpm > MOTOR_MAX_RPM)
+                    target_rpm = MOTOR_MAX_RPM;
+                if (target_rpm < -MOTOR_MAX_RPM)
+                    target_rpm = -MOTOR_MAX_RPM;
+
                 // 1. 更新编码器
                 motors[i].EncoderUpdate(&motors[i]);
                 // 2. 获取当前转速 (rpm)
                 motors[i].SpeedGet(&motors[i]);
-                // 3. 设定目标转速，需映射成rpm
-                motors[i].speed_set = wheel[i] * RPM_SCALE;
+                // 3. 设定目标转速
+                motors[i].speed_set = target_rpm;
                 // 4. PID计算
                 motors[i].Calc(&motors[i]);
                 // 5. 驱动电机
