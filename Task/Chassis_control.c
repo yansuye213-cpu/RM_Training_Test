@@ -8,9 +8,9 @@
 #include "pid.h"
 
 extern Motor motors[4]; //  引用全局电机对象
-#define JOY_MAX 340
+#define JOY_MAX 300 // 摇杆保险值
 #define REAL_MAX_RPM 331
-#define RPM_SCALE 0.97352 //  根据你的摇杆值与rpm对应关系调节
+#define RPM_SCALE 1.10333 //  根据你的摇杆值与rpm对应关系调节
 
 /* 计算四个麦轮速度: LF, RF, LB, RB */
 void mecanum_calc(int16_t vx, int16_t vy, int16_t vw, int32_t wheel[4])
