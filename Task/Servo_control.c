@@ -8,6 +8,7 @@
 
 // 状态变量
 static uint8_t last_switch_state = 0;
+static uint8_t last_switch3_state = 0;
 static uint32_t release_start_time = 0;
 static uint8_t is_releasing = 0;
 
@@ -82,7 +83,18 @@ void Start_Servo_Control(void const *argument)
 
     for (;;)
     {
-        /* 1. 舵机角度控制仅在舵机模式下更新*/
+        /* 1. 检测 Switch3 上升沿 -> 四舵机回初始位 */
+        uint8_t current_switch3 = g_remote.Switch[2]; // Switch3
+        if (current_switch3 && !last_switch3_state)   // 上升沿
+        {
+            g_cmd.servo_angle[0] = 90;
+            g_cmd.servo_angle[1] = 35;
+            g_cmd.servo_angle[2] = 55;
+            g_cmd.servo_angle[3] = 90;
+        }
+        last_switch3_state = current_switch3;
+
+        /* 2. 舵机角度控制仅在舵机模式下更新*/
         if (g_cmd.mode == 1)
         {
             for (int s = 0; s < 4; s++)
@@ -91,7 +103,7 @@ void Start_Servo_Control(void const *argument)
             }
         }
 
-        /* 2. 吸盘控制与模式无关，始终执行，Switch2 边沿检测*/
+        /* 3. 吸盘控制与模式无关，始终执行，Switch2 边沿检测*/
         uint8_t current_switch_state = g_remote.Switch[1];
 
         if (current_switch_state != last_switch_state)
