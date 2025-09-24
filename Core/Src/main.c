@@ -45,7 +45,7 @@ volatile uint8_t vacuum_on = 0; // 0=关闭；1=开启
 
 /* 蓝牙解包的变量 */
 static uint8_t rx_buf[RX_BUF_LEN];
-static float servo_angle[4] = {90, 90, 90, 90};
+static float servo_angle[4] = {90, 35, 55, 90};
 static int selected_servo = -1;
 /* USER CODE END PTD */
 
