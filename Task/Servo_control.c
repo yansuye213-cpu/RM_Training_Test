@@ -6,11 +6,14 @@
 #include "ble_remote.h"
 #include <stdint.h>
 
-// 状态变量
-static uint8_t last_switch_state = 0;
-static uint8_t last_switch3_state = 0;
+// -------- 状态变量 --------
+static uint8_t last_switch2_state = 0; // Switch2 上次状态
+static uint8_t last_switch3_state = 0; // Switch3 上次状态
 static uint32_t release_start_time = 0;
 static uint8_t is_releasing = 0;
+
+extern volatile uint8_t servo_reset_lock; // 在 main.c 定义
+extern volatile uint32_t servo_lock_time;
 
 void servo_set_angle(uint8_t id, float angle)
 {
@@ -47,7 +50,6 @@ static void vacuum_pump_control(uint8_t state)
                       state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
-// 电磁阀控制函数  (PB1)
 static void solenoid_valve_control(uint8_t state)
 {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,
@@ -75,48 +77,50 @@ static void stop_release(void)
     is_releasing = 0;
 }
 
+// -------- 舵机任务 --------
 void Start_Servo_Control(void const *argument)
 {
-    // 初始状态：泵和阀关闭
     vacuum_pump_control(0);
     solenoid_valve_control(0);
 
     for (;;)
     {
-        /* 1. 检测 Switch3 上升沿 -> 四舵机回初始位 */
-        uint8_t current_switch3 = g_remote.Switch[2]; // Switch3
-        if (current_switch3 && !last_switch3_state)   // 上升沿
+        /* 1. 检测 Switch3 上升沿 -> 四舵机回初始位并锁定 1 秒 */
+        uint8_t current_switch3 = g_remote.Switch[2];
+        if (current_switch3 && !last_switch3_state)
         {
             g_cmd.servo_angle[0] = 90;
             g_cmd.servo_angle[1] = 35;
             g_cmd.servo_angle[2] = 55;
             g_cmd.servo_angle[3] = 90;
+
+            servo_reset_lock = 1;                // 进入锁定
+            servo_lock_time = osKernelSysTick(); // 记录时间
         }
         last_switch3_state = current_switch3;
 
-        /* 2. 舵机角度控制仅在舵机模式下更新*/
-        if (g_cmd.mode == 1)
+        /* 2. 自动解锁：1 秒后恢复蓝牙写入 */
+        if (servo_reset_lock &&
+            (osKernelSysTick() - servo_lock_time > 1000))
         {
-            for (int s = 0; s < 4; s++)
-            {
-                servo_set_angle(s, g_cmd.servo_angle[s]);
-            }
+            servo_reset_lock = 0;
         }
 
-        /* 3. 吸盘控制与模式无关，始终执行，Switch2 边沿检测*/
-        uint8_t current_switch_state = g_remote.Switch[1];
-
-        if (current_switch_state != last_switch_state)
+        /* 3. 舵机角度输出（锁定与否都维持当前 g_cmd 值） */
+        for (int s = 0; s < 4; s++)
         {
-            if (current_switch_state) // Switch2 打开
-            {
+            servo_set_angle(s, g_cmd.servo_angle[s]);
+        }
+
+        /* 4. 吸盘控制（Switch2） */
+        uint8_t current_switch2 = g_remote.Switch[1];
+        if (current_switch2 != last_switch2_state)
+        {
+            if (current_switch2)
                 start_vacuum(); // 开启吸气
-            }
-            else // Switch2 关闭
-            {
+            else                // Switch2 关闭
                 start_release(); // 开始放气
-            }
-            last_switch_state = current_switch_state;
+            last_switch2_state = current_switch2;
         }
 
         if (is_releasing &&
