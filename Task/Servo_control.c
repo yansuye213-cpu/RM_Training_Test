@@ -87,11 +87,10 @@ void Start_Servo_Control(void const *argument)
         uint8_t current_switch3 = g_remote.Switch[2]; // Switch3
         if (current_switch3 && !last_switch3_state)   // 上升沿
         {
-            // 直接设置所有舵机角度，不通过g_cmd
-            servo_set_angle(0, 90);
-            servo_set_angle(1, 35);
-            servo_set_angle(2, 55);
-            servo_set_angle(3, 90);
+            g_cmd.servo_angle[0] = 90;
+            g_cmd.servo_angle[1] = 35;
+            g_cmd.servo_angle[2] = 55;
+            g_cmd.servo_angle[3] = 90;
         }
         last_switch3_state = current_switch3;
 

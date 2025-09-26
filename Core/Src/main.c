@@ -81,43 +81,75 @@ static void ProcessBleData(uint8_t *buf, uint16_t size)
       if (uart_to_remote(&buf[i]) == REMOTE_OK)
       {
         control_cmd_t cmd;
-        cmd.mode = g_remote.Switch[0]; // 使用统一 volatile g_remote
+        cmd.mode = g_remote.Switch[0];
 
-        int selected_servo = -1;
-        for (int j = 0; j < 4; j++)
+        // 检查Switch3的状态
+        static uint8_t last_switch3_state = 0;
+        uint8_t current_switch3_state = g_remote.Switch[2];
+
+        // 如果Switch3按下（上升沿），则复位舵机角度到初始值
+        if (current_switch3_state && !last_switch3_state)
         {
-          if (g_remote.Button[j])
+          // 复位本地servo_angle数组和g_cmd
+          servo_angle[0] = 90;
+          servo_angle[1] = 35;
+          servo_angle[2] = 55;
+          servo_angle[3] = 90;
+          for (int j = 0; j < 4; j++)
           {
-            selected_servo = j;
-            cmd.selected_servo = j;
+            g_cmd.servo_angle[j] = servo_angle[j];
           }
         }
+        last_switch3_state = current_switch3_state;
 
-        for (int j = 0; j < 4; j++)
-          cmd.servo_angle[j] = servo_angle[j];
-
-        if (cmd.mode == 0)
-        { // 底盘模式
-          cmd.vx = (int16_t)g_remote.rocker[0].y_position;
-          cmd.vy = (int16_t)g_remote.rocker[0].x_position;
-          cmd.vw = (int16_t)g_remote.rocker[1].y_position;
+        // 如果Switch3按下，则保持舵机角度为初始值，不处理摇杆操作
+        if (current_switch3_state)
+        {
+          // 保持当前角度不变
+          for (int j = 0; j < 4; j++)
+          {
+            cmd.servo_angle[j] = servo_angle[j];
+          }
         }
         else
-        { // 舵机模式
-          cmd.vx = cmd.vy = cmd.vw = 0;
-          if (selected_servo >= 0)
+        {
+          // Switch3未按下，正常处理
+          int selected_servo = -1;
+          for (int j = 0; j < 4; j++)
           {
-            float delta = g_remote.rocker[1].x_position * 0.05f;
-            servo_angle[selected_servo] += delta;
-            if (servo_angle[selected_servo] < 0)
-              servo_angle[selected_servo] = 0;
-            if (servo_angle[selected_servo] > 180)
-              servo_angle[selected_servo] = 180;
-            cmd.servo_angle[selected_servo] = servo_angle[selected_servo];
+            if (g_remote.Button[j])
+            {
+              selected_servo = j;
+              cmd.selected_servo = j;
+            }
+          }
+
+          for (int j = 0; j < 4; j++)
+            cmd.servo_angle[j] = servo_angle[j];
+
+          if (cmd.mode == 0)
+          {
+            cmd.vx = (int16_t)g_remote.rocker[0].y_position;
+            cmd.vy = (int16_t)g_remote.rocker[0].x_position;
+            cmd.vw = (int16_t)g_remote.rocker[1].y_position;
+          }
+          else
+          {
+            cmd.vx = cmd.vy = cmd.vw = 0;
+            if (selected_servo >= 0)
+            {
+              float delta = g_remote.rocker[1].x_position * 0.05f;
+              servo_angle[selected_servo] += delta;
+              if (servo_angle[selected_servo] < 0)
+                servo_angle[selected_servo] = 0;
+              if (servo_angle[selected_servo] > 180)
+                servo_angle[selected_servo] = 180;
+              cmd.servo_angle[selected_servo] = servo_angle[selected_servo];
+            }
           }
         }
 
-        g_cmd = cmd; // 更新全局控制结构
+        g_cmd = cmd;
       }
     }
   }
