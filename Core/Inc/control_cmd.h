@@ -14,7 +14,5 @@ typedef struct
 
 /* 在这里声明全局变量 */
 extern volatile control_cmd_t g_cmd;
-extern volatile uint8_t servo_reset_lock;
-extern volatile uint32_t servo_lock_time;
 
 #endif

@@ -42,8 +42,6 @@
 /* 全局控制数据，两个任务都直接读取 */
 volatile control_cmd_t g_cmd;
 volatile uint8_t vacuum_on = 0; // 0=关闭；1=开启
-volatile uint8_t servo_reset_lock = 0;
-volatile uint32_t servo_lock_time = 0;
 
 /* 蓝牙解包的变量 */
 static uint8_t rx_buf[RX_BUF_LEN];
@@ -107,8 +105,7 @@ static void ProcessBleData(uint8_t *buf, uint16_t size)
         else
         { // 舵机模式
           cmd.vx = cmd.vy = cmd.vw = 0;
-          // 只有在未锁定时才更新舵机角度 
-          if (!servo_reset_lock && selected_servo >= 0)
+          if (selected_servo >= 0)
           {
             float delta = g_remote.rocker[1].x_position * 0.05f;
             servo_angle[selected_servo] += delta;
