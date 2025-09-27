@@ -245,7 +245,7 @@ int main(void)
                       POSITION,
                       3600 - 1,           // max_out
                       1800 - 1,           // max_iout
-                      5.0f, 2.0f, 0.0f); // 5.0f, 2.0f, 0.0f
+                      10.0f, 2.0f, 0.0f); // 5.0f, 2.0f, 0.0f
   }
   /* USER CODE END 2 */
 

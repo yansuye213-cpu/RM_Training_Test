@@ -12,6 +12,7 @@ extern Motor motors[4]; //  引用全局电机对象
 // === 统一配置 ===
 #define JOY_RANGE 300.0f     // 取摇杆四方向测得的最小绝对值
 #define MOTOR_MAX_RPM 331.0f // 电机安全最大转速（rpm）
+#define ROTATE_GAIN 1.5f     // 旋转速度放大系数
 
 /* 计算四个麦轮速度: LF, RF, LB, RB */
 static void mecanum_calc(float vx, float vy, float vw, float wheel[4])
@@ -32,7 +33,7 @@ void Start_Chassis_Control(void const *argument)
             /* ---------- 1. 摇杆归一化到 [-1,1] ---------- */
             float vx = (float)g_cmd.vx / JOY_RANGE;
             float vy = (float)g_cmd.vy / JOY_RANGE;
-            float vw = (float)g_cmd.vw / JOY_RANGE;
+            float vw = ((float)g_cmd.vw / JOY_RANGE) * ROTATE_GAIN;
             if (vx > 1.0f)
                 vx = 1.0f;
             if (vx < -1.0f)
@@ -66,7 +67,7 @@ void Start_Chassis_Control(void const *argument)
                 motors[i].speed_set = target_rpm;
                 // 4. PID计算
                 motors[i].Calc(&motors[i]);
-                // 5. 驱动电机
+                // 5. 驱动电机//motors[1]
                 motors[i].Driver(&motors[i], (int16_t)motors[i].pid.out);
             }
         }

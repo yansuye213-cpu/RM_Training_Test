@@ -10,7 +10,7 @@
 
 #define MOTOR_FILTER 0.2
 #define POLL_INTERVAL_MS 9      // 轮询间隔
-#define MOTOR_SPEED_RERATIO 30u  // 电机减速比
+#define MOTOR_SPEED_RERATIO 31u  // 电机减速比
 #define PULSE_PRE_ROUND 11       // 一圈多少个脉冲
 #define RADIUS_OF_TYRE 30        // 轮胎半径，单位毫米
 #define MULTIPLE_ENCODER 4       // 编码器倍频,采用T1&T2计数，倍数*4
