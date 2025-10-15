@@ -40,17 +40,17 @@ void servo_set_angle(uint8_t id, float angle)
     }
 }
 
-// 真空泵控制函数  (PB0)
+// 真空泵控制函数  (PB1)
 static void vacuum_pump_control(uint8_t state)
 {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,
                       state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
-// 电磁阀控制函数  (PB1)
+// 电磁阀控制函数  (PB0)
 static void solenoid_valve_control(uint8_t state)
 {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1,
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,
                       state ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
@@ -81,16 +81,27 @@ void Start_Servo_Control(void const *argument)
     vacuum_pump_control(0);
     solenoid_valve_control(0);
 
+    servo_set_angle(0, 90);
+    servo_set_angle(1, 90);
+    servo_set_angle(2, 90);
+    servo_set_angle(3, 90);
+
+    // 同时更新全局命令的角度值，确保数据一致
+    g_cmd.servo_angle[0] = 90;
+    g_cmd.servo_angle[1] = 90;
+    g_cmd.servo_angle[2] = 90;
+    g_cmd.servo_angle[3] = 90;
+
     for (;;)
     {
         /* 1. 检测 Switch3 上升沿 -> 四舵机回初始位 */
         uint8_t current_switch3 = g_remote.Switch[2]; // Switch3
         if (current_switch3 && !last_switch3_state)   // 上升沿
         {
-            g_cmd.servo_angle[0] = 90;
-            g_cmd.servo_angle[1] = 35;
-            g_cmd.servo_angle[2] = 55;
-            g_cmd.servo_angle[3] = 90;
+            g_cmd.servo_angle[0] = 81;
+            g_cmd.servo_angle[1] = 31;
+            g_cmd.servo_angle[2] = 64;
+            g_cmd.servo_angle[3] = 95;
         }
         last_switch3_state = current_switch3;
 
