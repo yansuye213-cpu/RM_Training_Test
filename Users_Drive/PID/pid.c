@@ -58,22 +58,24 @@ float PID_Calculate(PID *pid, float now, float set)
     pid->set = set;
     pid->now = now;
     pid->err[0] = set - now;
+    // 位置式PID的正确实现
     if (pid->mode == POSITION)
     {
         pid->Pout = pid->kp * pid->err[0];
-        if (pid->err[0] < 300 && pid->err[0] > -300)
-            pid->Iout += pid->ki * pid->err[0];
+        pid->Iout += pid->ki * pid->err[0]; 
         pid->Dout = pid->kd * (pid->err[0] - pid->err[1]);
-        pid->Iout = LimitMax(pid->Iout, pid->max_iout);
+        pid->Iout = LimitMax(pid->Iout, pid->max_iout); 
         pid->out = pid->Pout + pid->Iout + pid->Dout;
         pid->out = LimitMax(pid->out, pid->max_out);
     }
     else if (pid->mode == DELTA)
     {
-        pid->Pout = pid->kp * (pid->err[0] - pid->err[1]);
-        pid->Iout = pid->ki * pid->err[0];
-        pid->Dout = pid->kd * (pid->err[0] - 2.0f * pid->err[1] + pid->err[2]);
-        pid->out += pid->Pout + pid->Iout + pid->Dout;
+        // 增量式PID的正确实现
+        float delta_out = 0;
+        delta_out += pid->kp * (pid->err[0] - pid->err[1]);
+        delta_out += pid->ki * pid->err[0];
+        delta_out += pid->kd * (pid->err[0] - 2.0f * pid->err[1] + pid->err[2]);
+        pid->out += delta_out;
         pid->out = LimitMax(pid->out, pid->max_out);
     }
     return pid->out;

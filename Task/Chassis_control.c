@@ -7,29 +7,34 @@
 #include "motor.h"
 #include "pid.h"
 
-extern Motor motors[4]; //  引用全局电机对象
+extern Motor motors[4]; // 引用全局电机对象
 
 // === 统一配置 ===
 #define JOY_RANGE 300.0f     // 取摇杆四方向测得的最小绝对值
 #define MOTOR_MAX_RPM 331.0f // 电机安全最大转速（rpm）
-
+#define PWM_MAX 2500         // PWM最大值
 
 /* 计算四个麦轮速度: LF, RF, LB, RB */
 static void mecanum_calc(float vx, float vy, float vw, float wheel[4])
 {
-    wheel[0] = vx - vy - vw; // 左前
-    wheel[1] = vx + vy + vw; // 右前
-    wheel[2] = vx + vy - vw; // 左后
-    wheel[3] = vx - vy + vw; // 右后
+    wheel[0] = -vx + vy + vw; // 左前
+    wheel[1] = -vx - vy - vw; // 右前
+    wheel[2] = vx - vy + vw;  // 左后
+    wheel[3] = vx + vy - vw;  // 右后
 }
 
 void Start_Chassis_Control(void const *argument)
 {
     float wheel[4];
+    uint8_t closed_loop_mode = 0; // 0=开环, 1=闭环
+
     for (;;)
     {
         if (g_cmd.mode == 0) // 底盘模式
         {
+            // 修改：使用 g_cmd 中的开关状态，而不是直接访问 g_remote
+            closed_loop_mode = g_cmd.switch_state[3]; // Switch4
+
             /* ---------- 1. 摇杆归一化到 [-1,1] ---------- */
             float vx = (float)g_cmd.vx / JOY_RANGE;
             float vy = (float)g_cmd.vy / JOY_RANGE;
@@ -65,10 +70,25 @@ void Start_Chassis_Control(void const *argument)
                 motors[i].SpeedGet(&motors[i]);
                 // 3. 设定目标转速
                 motors[i].speed_set = target_rpm;
-                // 4. PID计算
-                motors[i].Calc(&motors[i]);
-                // 5. 驱动电机
-                motors[i].Driver(&motors[i], (int16_t)motors[i].pid.out);
+
+                if (closed_loop_mode)
+                {
+                    // 4. PID计算（闭环控制）
+                    motors[i].Calc(&motors[i]);
+                    // 5. 驱动电机
+                    motors[i].Driver(&motors[i], (int16_t)motors[i].pid.out);
+                }
+                else
+                {
+                    // 开环控制：直接转换为PWM
+                    int16_t pwm_output = (int16_t)(target_rpm / MOTOR_MAX_RPM * PWM_MAX);
+                    if (pwm_output > 0 && pwm_output < 300)
+                        pwm_output = 300;
+                    if (pwm_output < 0 && pwm_output > -300)
+                        pwm_output = -300;
+                    // 驱动电机
+                    motors[i].Driver(&motors[i], pwm_output);
+                }
             }
         }
         else // 舵机模式
@@ -81,4 +101,3 @@ void Start_Chassis_Control(void const *argument)
         osDelay(10); // 与 Motor_Speed_Get 中的采样周期保持一致
     }
 }
-

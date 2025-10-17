@@ -45,8 +45,7 @@ volatile uint8_t vacuum_on = 0; // 0=关闭；1=开启
 
 /* 蓝牙解包的变量 */
 static uint8_t rx_buf[RX_BUF_LEN];
-static float servo_angle[4] = {90, 90, 90, 90}; // 四个舵机的角度
-static int selected_servo = -1;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -80,74 +79,40 @@ static void ProcessBleData(uint8_t *buf, uint16_t size)
     {
       if (uart_to_remote(&buf[i]) == REMOTE_OK)
       {
+        // 只更新原始数据，不处理业务逻辑
         control_cmd_t cmd;
+
+        // 更新开关状态
+        for (int j = 0; j < 4; j++)
+        {
+          cmd.switch_state[j] = g_remote.Switch[j];
+        }
+
+        // 更新按钮状态
+        for (int j = 0; j < 4; j++)
+        {
+          cmd.button_state[j] = g_remote.Button[j];
+        }
+
+        // 更新摇杆数据
+        cmd.vx = (int16_t)g_remote.rocker[0].y_position;
+        cmd.vy = (int16_t)g_remote.rocker[0].x_position;
+        cmd.vw = (int16_t)g_remote.rocker[1].x_position;
+
+        // 模式直接使用Switch0
         cmd.mode = g_remote.Switch[0];
 
-        // 检查Switch3的状态
-        static uint8_t last_switch3_state = 0;
-        uint8_t current_switch3_state = g_remote.Switch[2];
-
-        // 如果Switch3按下（上升沿），则复位舵机角度到初始值
-        if (current_switch3_state && !last_switch3_state)
+        // 保持原有的舵机角度（业务逻辑在Servo_control.c中处理）
+        for (int j = 0; j < 4; j++)
         {
-          // 复位本地servo_angle数组和g_cmd
-          servo_angle[0] = 81;
-          servo_angle[1] = 31;
-          servo_angle[2] = 64;
-          servo_angle[3] = 95;
-          for (int j = 0; j < 4; j++)
-          {
-            g_cmd.servo_angle[j] = servo_angle[j];
-          }
+          cmd.servo_angle[j] = g_cmd.servo_angle[j];
         }
-        last_switch3_state = current_switch3_state;
 
-        // 如果Switch3按下，则保持舵机角度为初始值，不处理摇杆操作
-        if (current_switch3_state)
-        {
-          // 保持当前角度不变
-          for (int j = 0; j < 4; j++)
-          {
-            cmd.servo_angle[j] = servo_angle[j];
-          }
-        }
-        else
-        {
-          // Switch3未按下，正常处理
-          int selected_servo = -1;
-          for (int j = 0; j < 4; j++)
-          {
-            if (g_remote.Button[j])
-            {
-              selected_servo = j;
-              cmd.selected_servo = j;
-            }
-          }
+        // 选中的舵机（业务逻辑在Servo_control.c中处理）
+        cmd.selected_servo = g_cmd.selected_servo;
 
-          for (int j = 0; j < 4; j++)
-            cmd.servo_angle[j] = servo_angle[j];
-
-          if (cmd.mode == 0)
-          {
-            cmd.vx = (int16_t)g_remote.rocker[0].y_position; // 左摇杆上下 控制前后
-            cmd.vy = (int16_t)g_remote.rocker[1].x_position; // 左摇杆左右 控制左右
-            cmd.vw = 0;                                      // 右摇杆左右 控制旋转，(int16_t)g_remote.rocker[1].x_position
-          }
-          else
-          {
-            cmd.vx = cmd.vy = cmd.vw = 0;
-            if (selected_servo >= 0)
-            {
-              float delta = g_remote.rocker[1].x_position * 0.05f;
-              servo_angle[selected_servo] += delta;
-              if (servo_angle[selected_servo] < 0)
-                servo_angle[selected_servo] = 0;
-              if (servo_angle[selected_servo] > 180)
-                servo_angle[selected_servo] = 180;
-              cmd.servo_angle[selected_servo] = servo_angle[selected_servo];
-            }
-          }
-        }
+        // 吸盘状态（业务逻辑在Servo_control.c中处理）
+        cmd.suction_cup = g_cmd.suction_cup;
 
         g_cmd = cmd;
       }
@@ -213,8 +178,7 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4);
+	
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
@@ -227,12 +191,12 @@ int main(void)
              GPIOA, GPIO_PIN_5);
 
   Motor_Init(&motors[1], &htim3, &htim8, TIM_CHANNEL_2,
-             GPIOC, GPIO_PIN_4,
-             GPIOC, GPIO_PIN_5);
+             GPIOC, GPIO_PIN_5,
+             GPIOC, GPIO_PIN_4);
 
   Motor_Init(&motors[2], &htim4, &htim8, TIM_CHANNEL_3,
-             GPIOB, GPIO_PIN_13,
-             GPIOB, GPIO_PIN_12);
+             GPIOB, GPIO_PIN_12,
+             GPIOB, GPIO_PIN_13);
 
   Motor_Init(&motors[3], &htim5, &htim8, TIM_CHANNEL_4,
              GPIOB, GPIO_PIN_15,
@@ -240,27 +204,27 @@ int main(void)
 
   // ===== PID 初始化，解决每个电机差异=====
   motors[0].PidInit(&motors[0],
-                    DELTA,
-                    3600 - 1,           // max_out
-                    1800 - 1,           // max_iout
-                    5.0f, 2.0f, 1.0f); // 25.0f, 5.0f, 0.0f
+                    POSITION,
+                    3600 - 1,          // max_out
+                    1800 - 1,          // max_iout
+                    5.0f, 2.0f, 1.0f); // 5.0f, 2.0f, 1.0f
 
   motors[1].PidInit(&motors[1],
-                    DELTA,
-                    3600 - 1,           // max_out
-                    1800 - 1,           // max_iout
+                    POSITION,
+                    3600 - 1,          // max_out
+                    1800 - 1,          // max_iout
                     5.0f, 2.0f, 1.0f); // 25.0f, 5.0f, 0.0f
 
   motors[2].PidInit(&motors[2],
-                    DELTA,
-                    3600 - 1,           // max_out
-                    1800 - 1,           // max_iout
+                    POSITION,
+                    3600 - 1,          // max_out
+                    1800 - 1,          // max_iout
                     5.0f, 2.0f, 1.0f); // 25.0f, 5.0f, 0.0f
 
   motors[3].PidInit(&motors[3],
-                    DELTA,
-                    3600 - 1,           // max_out
-                    1800 - 1,           // max_iout
+                    POSITION,
+                    3600 - 1,          // max_out
+                    1800 - 1,          // max_iout
                     5.0f, 2.0f, 1.0f); // 25.0f, 5.0f, 0.0f
 
   /* USER CODE END 2 */
