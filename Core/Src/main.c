@@ -70,12 +70,54 @@ void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 static void ProcessBleData(uint8_t *buf, uint16_t size)
 {
-  if (size < BLE_FRAME_LEN)
-    return;
-
-  for (uint16_t i = 0; i + BLE_FRAME_LEN <= size; i++)
+  if (size < BLE_REMOTE_LENGTH)
   {
-    if (buf[i] == 0xFE && buf[i + BLE_FRAME_LEN - 1] == 0xFD)
+    // 处理单个字符命令
+    if (size == 1 && buf[0] >= '1' && buf[0] <= '9' && g_cmd.switch_state[0])
+    {
+      // 设置舵机角度到预设位置（每个舵机不同角度）
+      switch (buf[0])
+      {
+      case '1': // 预设1
+        g_cmd.servo_angle[0] = 55.512f;
+        g_cmd.servo_angle[1] = 51.289f;
+        g_cmd.servo_angle[2] = 76.723f;
+        g_cmd.servo_angle[3] = 101.663f;
+        break;
+      case '2': // 预设2
+        g_cmd.servo_angle[0] = 29.907f;
+        g_cmd.servo_angle[1] = 67.807f;
+        g_cmd.servo_angle[2] = 88.690f;
+        g_cmd.servo_angle[3] = 102.047f;
+        break;
+      case '3': // 预设3
+        g_cmd.servo_angle[0] = 2.028f;
+        g_cmd.servo_angle[1] = 71.326f;
+        g_cmd.servo_angle[2] = 81.532f;
+        g_cmd.servo_angle[3] = 99.407f;
+        break;
+      case '4': // 预设4
+        g_cmd.servo_angle[0] = 123.201f;
+        g_cmd.servo_angle[1] = 97.498f;
+        g_cmd.servo_angle[2] = 76.150f;
+        g_cmd.servo_angle[3] = 54.548f;
+        break;
+      case '5': // 预设5
+        g_cmd.servo_angle[0] = 119.937f;
+        g_cmd.servo_angle[1] = 113.380f;
+        g_cmd.servo_angle[2] = 88.999f;
+        g_cmd.servo_angle[3] = 34.496f;
+        break;
+      }
+    }
+    return;
+  }
+
+  // 蓝牙帧处理
+  for (uint16_t i = 0; i + BLE_REMOTE_LENGTH <= size; i++)
+  {
+    // 使用头文件中定义的帧头尾
+    if (buf[i] == BLE_REMOTE_HEAD && buf[i + BLE_REMOTE_LENGTH - 1] == BLE_REMOTE_TAIL)
     {
       if (uart_to_remote(&buf[i]) == REMOTE_OK)
       {
@@ -114,6 +156,7 @@ static void ProcessBleData(uint8_t *buf, uint16_t size)
         // 吸盘状态（业务逻辑在Servo_control.c中处理）
         cmd.suction_cup = g_cmd.suction_cup;
 
+        // 一次性更新全局控制命令
         g_cmd = cmd;
       }
     }
@@ -178,7 +221,8 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2);
-	
+  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4);
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
